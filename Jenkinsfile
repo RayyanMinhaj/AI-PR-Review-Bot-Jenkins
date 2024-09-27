@@ -11,14 +11,14 @@ pipeline {
         stage('Compile TypeScript') {
             steps {
                 script {
-                    bat 'tsc'
+                    bat 'npx tsc'
                 }
             }
         }
         stage('Run Application') {
             steps {
                 script {
-                    bat 'node dist/index.js'
+                    bat 'npm start'
                 }
             }
         }
