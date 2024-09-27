@@ -6,7 +6,6 @@ pipeline {
         GITHUB_TOKEN = credentials('GITHUB_TOKEN')
     }
 
-
     stages {
         stage('Install Dependencies') {
             steps {
@@ -15,17 +14,10 @@ pipeline {
                 }
             }
         }
-        stage('Compile TypeScript') {
+        stage('Run PR Review Bot') {
             steps {
                 script {
-                    bat 'npx tsc' 
-                }
-            }
-        }
-        stage('Run Application') {
-            steps {
-                script {
-                    bat 'node dist/index.js'
+                    bat 'npm run start'
                 }
             }
         }
