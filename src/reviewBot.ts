@@ -94,6 +94,6 @@ export class ReviewBot {
 
   private generateCommentForLine(line: string): string {
     
-    return `This line adds functionality: ${line.trim()}`; // Placeholder
+    return `This line adds functionality: ${line.trim()}`; 
   }
 }
