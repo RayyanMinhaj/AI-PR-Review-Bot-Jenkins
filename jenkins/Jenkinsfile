@@ -18,7 +18,7 @@ pipeline {
         stage('Compile TypeScript') {
             steps {
                 script {
-                    bat 'npx tsc' //npx tsc compiles src/index.ts into dist/index.js
+                    bat 'npx tsc' 
                 }
             }
         }
