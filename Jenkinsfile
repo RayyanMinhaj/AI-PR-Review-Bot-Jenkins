@@ -1,5 +1,12 @@
 pipeline {
     agent any 
+    
+    environment{
+        OPENAI_API_KEY = credentials('OPENAI_API_KEY')
+        GITHUB_TOKEN = credentials('GITHUB_TOKEN')
+    }
+
+
     stages {
         stage('Install Dependencies') {
             steps {
@@ -11,7 +18,7 @@ pipeline {
         stage('Compile TypeScript') {
             steps {
                 script {
-                    bat 'npx tsc'
+                    bat 'npx tsc' //npx tsc compiles src/index.ts into dist/index.js
                 }
             }
         }
