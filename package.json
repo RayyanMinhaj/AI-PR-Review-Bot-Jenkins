@@ -8,12 +8,13 @@
         "start": "node dist/index.js"
     },
     "dependencies": {
-        "@actions/core": "^1.9.0", 
-        "openai": "^3.0.0",         
-        "octokit": "^2.0.0"         
+        "@actions/core": "^1.9.0",
+        "@octokit/rest": "^21.0.2",
+        "octokit": "^2.0.0",
+        "openai": "^3.0.0"
     },
     "devDependencies": {
-        "typescript": "^5.0.0",     
-        "@types/node": "^18.0.0"   
+        "@types/node": "^18.19.53",
+        "typescript": "^5.0.0"
     }
 }
