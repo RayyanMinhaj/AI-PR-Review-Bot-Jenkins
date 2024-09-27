@@ -18,7 +18,7 @@ pipeline {
         stage('Run Application') {
             steps {
                 script {
-                    bat 'npm start'
+                    bat 'node dist/index.js'
                 }
             }
         }
