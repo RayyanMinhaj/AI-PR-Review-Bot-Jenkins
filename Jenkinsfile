@@ -15,19 +15,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    
-                    withEnv(["PATH+NODE=${tool name: 'NodeJS', type: 'NodeJS'}/bin"]) {
-                        bat 'npm install' 
-                    }
+                    bat 'npm install'
                 }
             }
         }
         stage('Build') {
             steps {
                 script {
-                    withEnv(["PATH+NODE=${tool name: 'NodeJS', type: 'NodeJS'}/bin"]) {
-                        bat 'npx tsc' // compiles TypeScript to JavaScript
-                    }
+                    bat 'npx tsc' // compiles TypeScript to JavaScript
                 }
             }
         }
@@ -44,14 +39,6 @@ pipeline {
                     }
                 }
             }
-        }
-    }
-    post {
-        success {
-            echo 'Pipeline completed successfully.'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
