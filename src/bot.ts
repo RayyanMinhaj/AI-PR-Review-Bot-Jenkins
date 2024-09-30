@@ -7,14 +7,13 @@ export async function generateGPTResponse(
     title: string,
     description: string,
     fileDiff: string,
-    shortSummary: string
 ): Promise<string> {
 
     const openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY, 
     });
 
-    const inputs = new Inputs(title, description, fileDiff, shortSummary);
+    const inputs = new Inputs(title, description, fileDiff);
 
     const prompts = new Prompts();
     const summaryPrompt = prompts.renderSummarizeFileDiff(inputs, true); //gets the prompt from here
