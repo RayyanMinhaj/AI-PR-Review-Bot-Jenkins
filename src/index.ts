@@ -1,4 +1,8 @@
+//this is called main.ts in CodeRabbit
+
 import { postComment } from "./ocktokitHelper";
+import { generateGPTResponse } from "./bot";
+import { review } from "./review";
 
 async function run() {
     // i think it is gathering most of this data in commenter.ts and some
@@ -17,11 +21,18 @@ async function run() {
         return;
     }
 
-    const body = "THIS IS A TEST COMMENT FROM AI BOT!!!!!!!";
+    /////////THIS NEEDS TO BE REPLACED WITH THE REAL STUFF///////////////////
+    //const title = "Example PR Title";                                   ///
+    //const description = "This is an example description for the PR.";   ///
+    //const fileDiff = "Here would be the diff output...";                ///
+    /////////////////////////////////////////////////////////////////////////
+
+    const { title, description, fileDiff } = await review(owner, repo, parseInt(pullNumber));
+
+    const body = await generateGPTResponse(title, description, fileDiff);
 
     await postComment(owner, repo, parseInt(pullNumber), body);
 
-    
 }
 
 run();

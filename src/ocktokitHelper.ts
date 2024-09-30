@@ -1,3 +1,5 @@
+//this is a mix of the octokit.ts and commenter.ts file
+
 import { Octokit } from "@octokit/rest";
 
 const token = process.env.GITHUB_TOKEN || "";

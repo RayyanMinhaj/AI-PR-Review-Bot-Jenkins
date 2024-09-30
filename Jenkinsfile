@@ -3,15 +3,11 @@ pipeline {
 
     environment {
         GITHUB_TOKEN = credentials('GITHUB_TOKEN') 
+        OPENAI_API_KEY = credentials('OPENAI_API_KEY')
     }
 
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Install Dependencies') {
             steps {
                 script {
