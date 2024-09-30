@@ -17,7 +17,7 @@ pipeline {
                 script {
                     
                     withEnv(["PATH+NODE=${tool name: 'NodeJS', type: 'NodeJS'}/bin"]) {
-                        sh 'npm install' 
+                        bat 'npm install' 
                     }
                 }
             }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     withEnv(["PATH+NODE=${tool name: 'NodeJS', type: 'NodeJS'}/bin"]) {
-                        sh 'npx tsc' // compiles TypeScript to JavaScript
+                        bat 'npx tsc' // compiles TypeScript to JavaScript
                     }
                 }
             }
