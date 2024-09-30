@@ -37,54 +37,7 @@ while not game_over:
                 print("P", end=" ")
             elif board[y][x] == -1:
                 print("M", end=" ")
-            elif board[y][x] == 0:
-                print(".", end=" ")
-            else:
-                print(board[y][x], end=" ")
-        print()
-
-    # Print the game stats
-    print("Moves:", moves)
-    print("Flags:", flags)
-    print("Mines found:", mines_found)
-
-    # Get the player's input
-    action = input("Enter your action (move, flag, or unflag): ")
-    direction = input("Enter the direction (up, down, left, or right): ")
-
-    # Update the player's position
-    if direction == "up":
-        player_y -= 1
-    elif direction == "down":
-        player_y += 1
-    elif direction == "left":
-        player_x -= 1
-    elif direction == "right":
-        player_x += 1
-
-    # Check if the player has hit a mine
-    if board[player_y][player_x] == -1:
-        game_over = True
-        print("Game over! You hit a mine.")
-    else:
-        moves += 1
-
-    # Check if the player has won
-    if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES:
-        game_over = True
-        print("Congratulations! You found all the mines.")
-
-    # Place a mine
-    if action == "move":
-        # Do nothing
-        pass
-    elif action == "flag":
-        if board[player_y][player_x] == 0:
-            board[player_y][player_x] = "F"
-            flags += 1
-    elif action == "unflag":
-        if board[player_y][player_x] == "F":
-            board[player_y][player_x] = 0
+            elif bo] = 0
             flags -= 1
 
 # Place the mines randomly
