@@ -16,11 +16,11 @@ export async function generateGPTResponse(
     const inputs = new Inputs(title, description, fileDiff);
 
     const prompts = new Prompts();
-    const summaryPrompt = prompts.renderSummarizeFileDiff(inputs, false); //gets the prompt from here
+    const summaryPrompt = prompts.renderReviewFileDiff(inputs); //gets the prompt from here
 
     try {
         const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // or "gpt-4"
+            model: "gpt-4o-mini", // or "gpt-3.5"
             messages: [{ role: "user", content: summaryPrompt }],
         });
 
