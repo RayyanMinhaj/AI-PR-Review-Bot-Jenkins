@@ -5,17 +5,20 @@ export class Inputs {
     description: string;
     fileDiff: string;
     shortSummary: string;
+    patches: string;
   
     constructor(
       title = 'no title provided',
       description = 'no description provided',
       fileDiff = 'file diff cannot be provided',
-      shortSummary = 'no summary provided'
+      shortSummary = 'no summary provided',
+      patches = ''
     ) {
       this.title = title;
       this.description = description;
       this.fileDiff = fileDiff;
       this.shortSummary = shortSummary;
+      this.patches = patches
     }
   
     render(content: string): string {
@@ -33,6 +36,9 @@ export class Inputs {
       }
       if (this.shortSummary) {
         content = content.replace('$short_summary', this.shortSummary);
+      }
+      if (this.patches) {
+        content = content.replace('$patches', this.patches)
       }
       return content;
     }

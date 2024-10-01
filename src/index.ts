@@ -3,6 +3,7 @@
 import { postComment } from "./ocktokitHelper";
 import { generateGPTResponse } from "./bot";
 import { review } from "./review";
+import { splitPatch, patchStartEndLine, parsePatch } from "./review";
 
 async function run() {
     // i think it is gathering most of this data in commenter.ts and some
@@ -21,17 +22,24 @@ async function run() {
         return;
     }
 
-    /////////THIS NEEDS TO BE REPLACED WITH THE REAL STUFF///////////////////
-    //const title = "Example PR Title";                                   ///
-    //const description = "This is an example description for the PR.";   ///
-    //const fileDiff = "Here would be the diff output...";                ///
-    /////////////////////////////////////////////////////////////////////////
+    
+    const { title, description, fileDiff } = await review(owner, repo, parseInt(pullNumber)); //gets the title, description and filediff of PR
 
-    const { title, description, fileDiff } = await review(owner, repo, parseInt(pullNumber));
-
-    const body = await generateGPTResponse(title, description, fileDiff);
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    const body = await generateGPTResponse(title, description, fileDiff); 
 
     await postComment(owner, repo, parseInt(pullNumber), body);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //Moving towards making inline comments
+    const patches = splitPatch(fileDiff)
+    const hunks = parsePatch(patches[0])
+
+    if (hunks){
+        console.log("Old Hunk: ", hunks.oldHunk);
+        console.log("New Hunk: ", hunks.newHunk);
+    }
+
 
 }
 

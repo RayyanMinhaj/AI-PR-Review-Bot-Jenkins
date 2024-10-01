@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import { StartupSnapshot } from "v8";
 
 export async function review(owner: string, repo: string, pullNumber: number): Promise<{ title: string, description: string, fileDiff: string }> {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
@@ -29,3 +30,117 @@ export async function review(owner: string, repo: string, pullNumber: number): P
 
     return { title, description, fileDiff };
 }
+
+
+//////////////////////////// Following section deals with inline commenting ///////////////////////////////
+
+//most of this logic is taken from reviews.ts (line: 809 - parsePatch function)
+export interface HunkInfo {
+  oldHunk: { startLine: number; endLine: number };
+  newHunk: { startLine: number; endLine: number };
+}
+
+export const splitPatch = (patch: string | null | undefined): string[] => {
+  if (patch == null) {
+    return [];
+  }
+
+  const pattern = /(^@@ -(\d+),(\d+) \+(\d+),(\d+) @@).*$/gm;
+
+  const result: string[] = [];
+  let last = -1;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(patch)) !== null) {
+    if (last === -1) {
+      last = match.index;
+    } else {
+      result.push(patch.substring(last, match.index));
+      last = match.index;
+    }
+  }
+  if (last !== -1) {
+    result.push(patch.substring(last));
+  }
+  return result;
+};
+
+export const patchStartEndLine = (
+  patch: string
+): HunkInfo | null => {
+  const pattern = /(^@@ -(\d+),(\d+) \+(\d+),(\d+) @@)/gm;
+  const match = pattern.exec(patch);
+  if (match != null) {
+    const oldBegin = parseInt(match[2]);
+    const oldDiff = parseInt(match[3]);
+    const newBegin = parseInt(match[4]);
+    const newDiff = parseInt(match[5]);
+    return {
+      oldHunk: {
+        startLine: oldBegin,
+        endLine: oldBegin + oldDiff - 1,
+      },
+      newHunk: {
+        startLine: newBegin,
+        endLine: newBegin + newDiff - 1,
+      },
+    };
+  } else {
+    return null;
+  }
+};
+
+export const parsePatch = (
+  patch: string
+): { oldHunk: string; newHunk: string } | null => {
+  const hunkInfo = patchStartEndLine(patch);
+  if (hunkInfo == null) {
+    return null;
+  }
+
+  const oldHunkLines: string[] = [];
+  const newHunkLines: string[] = [];
+
+  let newLine = hunkInfo.newHunk.startLine;
+
+  const lines = patch.split('\n').slice(1); // Skip the @@ line
+
+  if (lines[lines.length - 1] === '') {
+    lines.pop();
+  }
+
+  // Skip annotations for the first 3 and last 3 lines
+  const skipStart = 3;
+  const skipEnd = 3;
+
+  let currentLine = 0;
+
+  // Flag to identify if there are only removals in the patch
+  const removalOnly = !lines.some((line) => line.startsWith('+'));
+
+  for (const line of lines) {
+    currentLine++;
+    if (line.startsWith('-')) {
+      oldHunkLines.push(`${line.substring(1)}`);
+    } else if (line.startsWith('+')) {
+      newHunkLines.push(`${newLine}: ${line.substring(1)}`);
+      newLine++;
+    } else {
+      // context line
+      oldHunkLines.push(`${line}`);
+      if (
+        removalOnly ||
+        (currentLine > skipStart && currentLine <= lines.length - skipEnd)
+      ) {
+        newHunkLines.push(`${newLine}: ${line}`);
+      } else {
+        newHunkLines.push(`${line}`);
+      }
+      newLine++;
+    }
+  }
+
+  return {
+    oldHunk: oldHunkLines.join('\n'),
+    newHunk: newHunkLines.join('\n'),
+  };
+};
