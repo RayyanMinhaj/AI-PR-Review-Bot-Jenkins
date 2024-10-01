@@ -31,7 +31,7 @@ pipeline {
                         "GITHUB_PR_NUMBER=${env.GITHUB_PR_NUMBER}",
                         "GITHUB_TOKEN=${env.GITHUB_TOKEN}"
                     ]) { 
-                        bat 'node dist/index.js'
+                        bat 'node dist/index.js > git_diff.txt'
                     }
                 }
             }

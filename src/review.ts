@@ -3,7 +3,6 @@ import { Octokit } from "@octokit/rest";
 export async function review(owner: string, repo: string, pullNumber: number): Promise<{ title: string, description: string, fileDiff: string }> {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-    // Get PR details
     const { data: pr } = await octokit.pulls.get({
         owner,
         repo,
@@ -25,6 +24,8 @@ export async function review(owner: string, repo: string, pullNumber: number): P
     if (compare.files) {
         fileDiff = compare.files.map((file) => `${file.filename}\n${file.patch}`).join("\n\n");
     }
+
+    console.log(fileDiff)
 
     return { title, description, fileDiff };
 }
