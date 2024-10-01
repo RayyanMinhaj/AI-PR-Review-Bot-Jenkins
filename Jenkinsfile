@@ -32,6 +32,8 @@ pipeline {
                         "GITHUB_TOKEN=${env.GITHUB_TOKEN}"
                     ]) { 
                         bat 'node dist/index.js > git_diff.txt'
+
+                        archiveArtifacts artifacts: 'git_diff.txt', allowEmptyArchive: false
                     }
                 }
             }
