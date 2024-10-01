@@ -26,7 +26,7 @@ export async function review(owner: string, repo: string, pullNumber: number): P
         fileDiff = compare.files.map((file) => `${file.filename}\n${file.patch}`).join("\n\n");
     }
 
-    console.log(fileDiff)
+    //console.log(fileDiff)
 
     return { title, description, fileDiff };
 }
