@@ -16,7 +16,7 @@ export async function generateGPTResponse(
     const inputs = new Inputs(title, description, fileDiff);
 
     const prompts = new Prompts();
-    const summaryPrompt = prompts.renderSummarizeFileDiff(inputs, true); //gets the prompt from here
+    const summaryPrompt = prompts.renderSummarizeFileDiff(inputs, false); //gets the prompt from here
 
     try {
         const response = await openai.chat.completions.create({
