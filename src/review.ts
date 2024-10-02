@@ -23,8 +23,11 @@ export async function review(owner: string, repo: string, pullNumber: number): P
     // Handle the case where compare.files is undefined.
     let fileDiff = "";
     if (compare.files) {
-        fileDiff = compare.files.map((file) => `${file.filename}\n${file.patch}`).join("\n\n");
+        fileDiff = compare.files.map((file) => 
+            `--- ${file.filename}\n+++ ${file.filename}\n${file.patch}`
+        ).join("\n\n");
     }
+
 
     //console.log(fileDiff)
 
