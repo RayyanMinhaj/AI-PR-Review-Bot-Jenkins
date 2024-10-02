@@ -121,22 +121,18 @@ text "LGTM!" for that line range in the review section.
 
 {lines}
 
-### Example Output:
-markdown
-### Review Comments
+### Example response
 
-Lines 20-21:
-- The indentation for the "print" statements inside the nested loop is inconsistent. The <print> statements should be aligned with the <if> and <elif> statements for proper readability and to avoid potential indentation errors.
-
-diff
--                 print("P", end=" ")
-+             print("P", end=" ")
--                 print("M", end=" ")
-+             print("M", end=" ")
-
-  markdown
-Lines 22-23:
+Lines 22-22:
+There's a syntax error in the add function.
+\`\`\`diff
+-    retrn z
++    return z
+\`\`\`
+---
+Lines 24-25:
 LGTM!
+---
 
 `;
 
