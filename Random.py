@@ -46,21 +46,4 @@ class StudentManager:
 manager = StudentManager()
 manager.add_student("Alice", 20, 1)
 manager.add_student("Bob", 22, 2)
-manager.add_student("Charlie", 23, 3)
-
-print("\nBefore deleting:")
-manager.print_students()
-
-manager.delete_student(2)
-
-print("\nAfter deleting:")
-manager.print_students()
-
-# Adding a new student with duplicate ID triggers an error
-manager.add_student("David", 24, 1)
-
-# Updating student information
-manager.update_student(1, name="Alice Cooper", age=21)
-
-print("\nAfter updating student info:")
-manager.print_students()
+manager.add_student("C
