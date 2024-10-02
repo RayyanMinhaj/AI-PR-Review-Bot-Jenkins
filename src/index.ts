@@ -23,7 +23,9 @@ async function run() {
     }
 
     
-    const { title, description, fileDiff } = await review(owner, repo, parseInt(pullNumber)); //gets the title, description and filediff of PR
+    const { title, description, fileDiff, pullRequestSHA } = await review(owner, repo, parseInt(pullNumber)); //gets the title, description, filediff, and pullRequestSHA of PR
+
+    console.log("GIT DIFF: ", fileDiff);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     const body = await generateGPTResponseMainBody(title, description, fileDiff); 
@@ -33,32 +35,30 @@ async function run() {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //Moving towards making inline comments
     const patches = splitPatch(fileDiff)
-    const hunks = parsePatch(patches[0])
+
+    for(const patch of patches){
+        const hunks = parsePatch(patch)
+    
+        if (hunks){
+            console.log("Old Hunk: ", hunks.oldHunk); 
+            console.log("New Hunk: ", hunks.newHunk);
+            const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
+
+            const reviewComments: ReviewComment[] = parseReviewComments(inline_comments); //this will extract all the necessary info from response
 
 
-    if (hunks){
-        console.log("Old Hunk: ", hunks.oldHunk); 
-        console.log("New Hunk: ", hunks.newHunk);
-        const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
 
-        const reviewComments: ReviewComment[] = parseReviewComments(inline_comments); //this will extract all the necessary info from response
-
-
-        console.log("GPT OPENAI REVIEW COMMENTS: ", inline_comments);
-        console.log("REVIEW COMMENTS INTERFACE: ", reviewComments);
+            console.log("GPT OPENAI REVIEW COMMENTS: ", inline_comments);
+            console.log("REVIEW COMMENTS INTERFACE: ", reviewComments);
         
 
+            await postInlineComment(owner, repo, parseInt(pullNumber), pullRequestSHA, reviewComments);
 
-       // await postInlineComment(owner, repo, parseInt(pullNumber), inline_comments);
 
 
+        }
 
     }
-
-    
-
-
-    
 
 
 

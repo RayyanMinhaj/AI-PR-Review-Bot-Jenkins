@@ -1,6 +1,8 @@
 //this is a mix of the octokit.ts and commenter.ts file
 
 import { Octokit } from "@octokit/rest";
+import { ReviewComment } from "./review";
+
 
 const token = process.env.GITHUB_TOKEN || "";
 
@@ -30,6 +32,29 @@ export async function postComment(owner: string, repo: string, pullNumber: numbe
 //////////////////////////////////////////////////////////////////////////////////
 
 
-export async function postInlineComment(owner: string, repo:string, pullNumber: number, body:string){
+export async function postInlineComment(owner: string, repo:string, pullNumber: number, pullRequestSHA: string, reviewComments:ReviewComment[])
+{
+    for(const comment of reviewComments){
+        try{
+            await octokit.pulls.createReviewComment({
+                owner: owner,
+                repo: repo,
+                pull_number: pullNumber,
+                commit_id: pullRequestSHA, 
+                body: comment.comment,
+                path: "file",
+                line: comment.lineTo,
+                side: 'RIGHT',
+            });
+
+            console.log(`Comment posted on lines ${comment.lineFrom}-${comment.lineTo}: ${comment.comment}`);
     
+        }
+        catch(error){
+            console.error(`Error posting comment on lines ${comment.lineFrom}-${comment.lineTo}:`, error);
+        }
+    }
+
+      
+
 }

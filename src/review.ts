@@ -1,7 +1,6 @@
 import { Octokit } from "@octokit/rest";
-import { StartupSnapshot } from "v8";
 
-export async function review(owner: string, repo: string, pullNumber: number): Promise<{ title: string, description: string, fileDiff: string }> {
+export async function review(owner: string, repo: string, pullNumber: number): Promise<{ title: string, description: string, fileDiff: string, pullRequestSHA: string }> {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
     const { data: pr } = await octokit.pulls.get({
@@ -19,6 +18,7 @@ export async function review(owner: string, repo: string, pullNumber: number): P
 
     const title = pr.title;
     const description = pr.body || ""; //it can be left undefined.
+    const pullRequestSHA = pr.head.sha;
 
     // Handle the case where compare.files is undefined.
     let fileDiff = "";
@@ -28,7 +28,7 @@ export async function review(owner: string, repo: string, pullNumber: number): P
 
     //console.log(fileDiff)
 
-    return { title, description, fileDiff };
+    return { title, description, fileDiff, pullRequestSHA };
 }
 
 
