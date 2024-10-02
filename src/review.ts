@@ -17,15 +17,16 @@ export async function review(owner: string, repo: string, pullNumber: number): P
     });
 
     const title = pr.title;
-    const description = pr.body || ""; // it can be left undefined.
+    const description = pr.body || ""; //it can be left undefined.
     const pullRequestSHA = pr.head.sha;
 
     // Handle the case where compare.files is undefined.
     let fileDiff = "";
     if (compare.files) {
-        // Use the raw patch without additional formatting
-        fileDiff = compare.files.map((file) => file.patch).join("\n");
+        fileDiff = compare.files.map((file) => `${file.filename}\n${file.patch}`).join("\n\n");
     }
+
+    //console.log(fileDiff)
 
     return { title, description, fileDiff, pullRequestSHA };
 }
