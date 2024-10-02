@@ -38,6 +38,8 @@ async function run() {
         const filename = fileLines[0].replace(/^--- |^\+\+\+ /, "").trim(); // Extract filename from the first line
         const content = fileLines.slice(1).join("\n"); // Get the rest of the content
 
+        console.log("FILENAME: ", filename, "\n\n");
+        console.log("CONTENT OF FILE: ", content, "\n\n\n\n");
         /////////////////////////////////////////////////////////////////////////////////////////////////
         const body = await generateGPTResponseMainBody(title, description, content); 
 
