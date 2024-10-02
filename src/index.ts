@@ -44,7 +44,9 @@ async function run() {
         const reviewComments: ReviewComment[] = parseReviewComments(inline_comments); //this will extract all the necessary info from response
 
 
-        console.log("REVIEW COMMENTS: ", reviewComments);
+        console.log("GPT OPENAI REVIEW COMMENTS: ", inline_comments);
+        console.log("REVIEW COMMENTS INTERFACE: ", reviewComments);
+        
 
 
        // await postInlineComment(owner, repo, parseInt(pullNumber), inline_comments);

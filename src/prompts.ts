@@ -105,8 +105,8 @@ Task: Review new hunks for substantive issues using provided context and respond
 Output: Review comments in markdown with exact line number ranges in new hunks. Start and end line numbers must be within the same hunk. For single-line comments, start=end line number. Must use example response format below.
 Use fenced code blocks using the relevant language identifier where applicable.
 Don't annotate code snippets with line numbers. Format and indent code correctly.
-Do not use \`suggestion\` code blocks.
-For fixes, use \`diff\` code blocks, marking changes with \`+\` or \`-\`. The line number range for comments with fix snippets must exactly match the range to replace in the new hunk.
+Do not use suggestion code blocks.
+For fixes, use diff code blocks, marking changes with "+" or "-". The line number range for comments with fix snippets must exactly match the range to replace in the new hunk.
 
 - Do NOT provide general feedback, summaries, explanations of changes, or praises 
   for making good additions. 
@@ -115,10 +115,29 @@ For fixes, use \`diff\` code blocks, marking changes with \`+\` or \`-\`. The li
   the system or question intentions behind the changes.
 
 If there are no issues found on a line range, you MUST respond with the 
-text \`LGTM!\` for that line range in the review section. 
+text "LGTM!" for that line range in the review section. 
 
+## Changes made to 'filename' for your review
 
-$patches
+{lines}
+
+### Example Output:
+markdown
+### Review Comments
+
+Lines 20-21:
+- The indentation for the "print" statements inside the nested loop is inconsistent. The <print> statements should be aligned with the <if> and <elif> statements for proper readability and to avoid potential indentation errors.
+
+diff
+-                 print("P", end=" ")
++             print("P", end=" ")
+-                 print("M", end=" ")
++             print("M", end=" ")
+
+  markdown
+Lines 22-23:
+LGTM!
+
 `;
 
 
