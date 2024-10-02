@@ -1,9 +1,9 @@
 //this is called main.ts in CodeRabbit
 
-import { postComment } from "./ocktokitHelper";
-import { generateGPTResponse } from "./bot";
+import { postComment, postInlineComment } from "./ocktokitHelper";
+import { generateGPTResponseInlineComments, generateGPTResponseMainBody } from "./bot";
 import { review } from "./review";
-import { splitPatch, patchStartEndLine, parsePatch } from "./review";
+import { splitPatch, patchStartEndLine, parsePatch, parseReviewComments, ReviewComment } from "./review";
 
 async function run() {
     // i think it is gathering most of this data in commenter.ts and some
@@ -26,7 +26,7 @@ async function run() {
     const { title, description, fileDiff } = await review(owner, repo, parseInt(pullNumber)); //gets the title, description and filediff of PR
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    const body = await generateGPTResponse(title, description, fileDiff); 
+    const body = await generateGPTResponseMainBody(title, description, fileDiff); 
 
     await postComment(owner, repo, parseInt(pullNumber), body);
 
@@ -35,10 +35,29 @@ async function run() {
     const patches = splitPatch(fileDiff)
     const hunks = parsePatch(patches[0])
 
+
     if (hunks){
-        console.log("Old Hunk: ", hunks.oldHunk);
+        console.log("Old Hunk: ", hunks.oldHunk); 
         console.log("New Hunk: ", hunks.newHunk);
+        const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
+
+        const reviewComments: ReviewComment[] = parseReviewComments(inline_comments); //this will extract all the necessary info from response
+
+
+        console.log("REVIEW COMMENTS: ", reviewComments);
+
+
+       // await postInlineComment(owner, repo, parseInt(pullNumber), inline_comments);
+
+
+
     }
+
+    
+
+
+    
+
 
 
 }

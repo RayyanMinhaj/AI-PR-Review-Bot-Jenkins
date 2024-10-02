@@ -117,11 +117,9 @@ For fixes, use \`diff\` code blocks, marking changes with \`+\` or \`-\`. The li
 If there are no issues found on a line range, you MUST respond with the 
 text \`LGTM!\` for that line range in the review section. 
 
-## Changes made to \`$filename\` for your review
 
 $patches
 `;
-
 
 
   rayyanPrompt = `I have a git diff file containing before and after changes (from a pull request). I need a comprehensive code review in markdown format based on the following criteria:

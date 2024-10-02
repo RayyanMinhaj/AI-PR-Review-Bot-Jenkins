@@ -26,3 +26,10 @@ export async function postComment(owner: string, repo: string, pullNumber: numbe
     }
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+export async function postInlineComment(owner: string, repo:string, pullNumber: number, body:string){
+    
+}

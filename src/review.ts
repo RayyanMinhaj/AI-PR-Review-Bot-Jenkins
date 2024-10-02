@@ -144,3 +144,70 @@ export const parsePatch = (
     newHunk: newHunkLines.join('\n'),
   };
 };
+
+
+///This is to parse the gpt response and extract line to, line from, and the inline comment////
+export interface ReviewComment {
+  lineFrom: number;
+  lineTo: number;
+  comment: string;
+}
+
+export function parseReviewComments(text: string): ReviewComment[] {
+  const reviewComments: ReviewComment[] = [];
+  const lines = text.split("\n");
+
+  let lineFrom: number | null = null;
+  let lineTo: number | null = null;
+  let commentLines: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    const lineMatch = line.match(/^Lines (\d+)-(\d+):$/);
+    if (lineMatch) {
+      // If we have a previous comment, save it
+      if (lineFrom !== null && lineTo !== null && commentLines.length > 0) {
+        reviewComments.push({
+          lineFrom,
+          lineTo,
+          comment: commentLines.join(" ").trim(),
+        });
+        commentLines = [];
+      }
+
+      // Extract new line numbers
+      lineFrom = parseInt(lineMatch[1], 10);
+      lineTo = parseInt(lineMatch[2], 10);
+    } else if (line.startsWith("Lines ")) {
+      
+      const singleLineMatch = line.match(/^Lines (\d+):$/);
+      if (singleLineMatch) {
+        if (lineFrom !== null && lineTo !== null && commentLines.length > 0) {
+          reviewComments.push({
+            lineFrom,
+            lineTo,
+            comment: commentLines.join(" ").trim(),
+          });
+          commentLines = [];
+        }
+
+        lineFrom = parseInt(singleLineMatch[1], 10);
+        lineTo = lineFrom;
+      }
+    } else if (line) {
+      
+      commentLines.push(line);
+    }
+  }
+
+  if (lineFrom !== null && lineTo !== null && commentLines.length > 0) {
+    reviewComments.push({
+      lineFrom,
+      lineTo,
+      comment: commentLines.join(" ").trim(),
+    });
+  }
+
+  return reviewComments;
+}

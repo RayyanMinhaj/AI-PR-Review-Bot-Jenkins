@@ -4,8 +4,8 @@ export class Inputs {
     title: string;
     description: string;
     fileDiff: string;
-    shortSummary: string;
     patches: string;
+    shortSummary: string;
   
     constructor(
       title = 'no title provided',
