@@ -32,7 +32,7 @@ export async function postComment(owner: string, repo: string, pullNumber: numbe
 //////////////////////////////////////////////////////////////////////////////////
 
 
-export async function postInlineComment(owner: string, repo:string, pullNumber: number, pullRequestSHA: string, reviewComments:ReviewComment[])
+export async function postInlineComment(owner: string, repo:string, pullNumber: number, pullRequestSHA: string, filename:string, reviewComments:ReviewComment[])
 {
     for(const comment of reviewComments){
         try{
@@ -42,7 +42,7 @@ export async function postInlineComment(owner: string, repo:string, pullNumber: 
                 pull_number: pullNumber,
                 commit_id: pullRequestSHA, 
                 body: comment.comment,
-                path: "file",
+                path: filename,
                 line: comment.lineTo,
                 side: 'RIGHT',
             });
@@ -54,7 +54,6 @@ export async function postInlineComment(owner: string, repo:string, pullNumber: 
             console.error(`Error posting comment on lines ${comment.lineFrom}-${comment.lineTo}:`, error);
         }
     }
-
       
 
 }
