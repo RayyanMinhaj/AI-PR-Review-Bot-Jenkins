@@ -25,7 +25,7 @@ async function run() {
     
     const { title, description, fileDiff, pullRequestSHA } = await review(owner, repo, parseInt(pullNumber)); //gets the title, description, filediff, and pullRequestSHA of PR
 
-    console.log("GIT DIFF: ", fileDiff);
+    console.log("GIT DIFF: \n", fileDiff);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     const body = await generateGPTResponseMainBody(title, description, fileDiff); 
