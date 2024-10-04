@@ -57,6 +57,8 @@ async function run() {
                 //console.log("New Hunk: ", hunks.newHunk);
                 const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
 
+                console.log("\n\nGPT INLINE RESPONSE: \n", inline_comments);
+
                 const reviewComments: ReviewComment[] = await parseReviewComments(inline_comments); //this will extract all the necessary info from response
                 //i think this might be the culprit as this function places all the comments inside our interface.
 
