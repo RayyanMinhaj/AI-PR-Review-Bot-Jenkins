@@ -9,9 +9,9 @@ async function run() {
     // i think it is gathering most of this data in commenter.ts and some
     // inputs from options.ts file
 
-   const owner = process.env.GITHUB_PR_SOURCE_REPO_OWNER || ""; //RayyanMinhaj
-   const repo_url = process.env.GITHUB_REPO_GIT_URL || "";
-   const pullNumber = process.env.GITHUB_PR_NUMBER || "";
+    const owner = process.env.GITHUB_PR_SOURCE_REPO_OWNER || ""; //RayyanMinhaj
+    const repo_url = process.env.GITHUB_REPO_GIT_URL || "";
+    const pullNumber = process.env.GITHUB_PR_NUMBER || "";
 
     //extract repo name from url (e.g., "AI-PR-Review-Bot-Jenkins")
     const repoMatch = repo_url.match(/\/([^\/]+)\.git$/);
