@@ -43,7 +43,7 @@ export interface HunkInfo {
   newHunk: { startLine: number; endLine: number };
 }
 
-export const splitPatch = (patch: string | null | undefined): string[] => {
+export const splitPatch = async (patch: string | null | undefined): Promise<string[]> => {
   if (patch == null) {
     return [];
   }
@@ -67,9 +67,9 @@ export const splitPatch = (patch: string | null | undefined): string[] => {
   return result;
 };
 
-export const patchStartEndLine = (
+export const patchStartEndLine = async (
   patch: string
-): HunkInfo | null => {
+): Promise<HunkInfo | null> => {
   const pattern = /(^@@ -(\d+),(\d+) \+(\d+),(\d+) @@)/gm;
   const match = pattern.exec(patch);
   if (match != null) {
@@ -92,10 +92,10 @@ export const patchStartEndLine = (
   }
 };
 
-export const parsePatch = (
+export const parsePatch = async (
   patch: string
-): { oldHunk: string; newHunk: string } | null => {
-  const hunkInfo = patchStartEndLine(patch);
+): Promise<{ oldHunk: string; newHunk: string } | null> => {
+  const hunkInfo = await patchStartEndLine(patch);
   if (hunkInfo == null) {
     return null;
   }

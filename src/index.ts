@@ -40,17 +40,17 @@ async function run() {
 
         console.log("FILENAME: ", filename, "\n\n");
         console.log("CONTENT OF FILE: ", content, "\n\n\n\n");
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////// Main body comment
         const body = await generateGPTResponseMainBody(title, description, content); 
 
         await postComment(owner, repo, parseInt(pullNumber), body);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //Moving towards making inline comments
-        const patches = splitPatch(fileDiff)
+        const patches = await splitPatch(fileDiff)
 
         for(const patch of patches){
-            const hunks = parsePatch(patch)
+            const hunks = await parsePatch(patch)
         
             if (hunks){
                 //console.log("Old Hunk: ", hunks.oldHunk); 
