@@ -156,7 +156,7 @@ export interface ReviewComment {
   comment: string;
 }
 
-export function parseReviewComments(text: string): ReviewComment[] {
+export async function parseReviewComments(text: string): Promise<ReviewComment[]> {
   const reviewComments: ReviewComment[] = [];
   const lines = text.split("\n");
 
