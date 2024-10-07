@@ -44,7 +44,7 @@ export async function postInlineComment(owner: string, repo:string, pullNumber: 
                     commit_id: pullRequestSHA, 
                     body: comment.comment,
                     path: filename,
-                    line: comment.lineFrom,
+                    line: comment.lineTo,
                     side: 'RIGHT',
                 });
     

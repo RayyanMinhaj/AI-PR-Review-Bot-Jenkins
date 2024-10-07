@@ -48,7 +48,7 @@ export async function generateGPTResponseInlineComments(
         apiKey: process.env.OPENAI_API_KEY, 
     });
 
-    const inputs = new Inputs(title, description,"",patches); //keeping filediff as "" we dont need it in the prompt
+    const inputs = new Inputs(title, description,"", "",patches); //keeping filediff as "" we dont need it in the prompt
 
     const prompts = new Prompts();
     

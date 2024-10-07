@@ -99,7 +99,7 @@ $short_summary
 
 ## IMPORTANT Instructions
 
-Input: New hunks annotated with line numbers and old hunks (replaced code). Hunks represent incomplete code fragments which mean u will face incomplete code or unindented code so try to ignore trivial issues and focus on serious ones.
+Input: New hunks annotated with line numbers (replaced code). Hunks represent incomplete code fragments which mean u will face incomplete code or unindented code so try to ignore trivial issues and focus on serious ones.
 Additional Context: PR title, description, summaries and comment chains.
 Task: Review new hunks for substantive issues using provided context and respond with comments if necessary.
 Output: Review comments in markdown with exact line number ranges in new hunks. Start and end line numbers must be within the same hunk. For single-line comments, start=end line number. Must use example response format below.
@@ -121,7 +121,7 @@ text "LGTM!" for that line range in the review section.
 
 ## Changes made to 'filename' for your review
 
-{lines}
+{$patches}
 
 ### Example response
 
