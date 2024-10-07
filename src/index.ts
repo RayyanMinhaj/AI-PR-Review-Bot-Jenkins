@@ -69,7 +69,7 @@ async function run() {
 
             await postInlineComment(owner, repo, parseInt(pullNumber), pullRequestSHA, filename, reviewComments);
 
-            }
+        }
 
         
 
