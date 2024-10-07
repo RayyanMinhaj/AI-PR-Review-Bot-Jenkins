@@ -103,7 +103,7 @@ export const parsePatch = async (
   const oldHunkLines: string[] = [];
   const newHunkLines: string[] = [];
 
-  let newLine = hunkInfo.newHunk.startLine - 1;
+  let newLine = hunkInfo.newHunk.startLine;
 
   const lines = patch.split('\n').slice(1); // Skip the @@ line
 
