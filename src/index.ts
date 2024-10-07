@@ -27,7 +27,7 @@ async function run() {
 
     //what we want to do here is that we want to run a loop for every file inside our diff, so that response is
     //generated for each file every time 
-    console.log("GIT DIFF: \n", fileDiff);
+    //console.log("GIT DIFF: \n", fileDiff);
     
     const fileChanges = fileDiff.split(/--- | \+\+\+/).filter(Boolean).map(file => file.trim());
     
@@ -68,7 +68,6 @@ async function run() {
             
 
             await postInlineComment(owner, repo, parseInt(pullNumber), pullRequestSHA, filename, reviewComments);
-
 
             }
 
