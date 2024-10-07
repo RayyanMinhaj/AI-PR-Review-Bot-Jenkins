@@ -35,6 +35,7 @@ export async function postComment(owner: string, repo: string, pullNumber: numbe
 export async function postInlineComment(owner: string, repo:string, pullNumber: number, pullRequestSHA: string, filename:string, reviewComments:ReviewComment[])
 {
     for(const comment of reviewComments){
+        console.log("Heres the comment to be posted brah: ",comment.comment, "\n\n");
         if (!comment.comment.includes("LGTM!")){
             try{
                 await octokit.pulls.createReviewComment({
