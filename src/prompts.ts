@@ -106,6 +106,8 @@ Output: Review comments in markdown with exact line number ranges in new hunks. 
 Use fenced code blocks using the relevant language identifier where applicable.
 Don't annotate code snippets with line numbers. Format and indent code correctly.
 Do not use suggestion code blocks.
+Do NOT recommend indentation fixes as you will receive change hunks (only those lines that have been changed), use the context surrounding the change hunk to point out any issues that need commenting
+
 For fixes, use diff code blocks, marking changes with "+" or "-". The line number range for comments with fix snippets must exactly match the range to replace in the new hunk.
 
 - Do NOT provide general feedback, summaries, explanations of changes, or praises 
