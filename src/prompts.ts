@@ -110,11 +110,11 @@ Do NOT recommend indentation fixes as you will receive change hunks (only those 
 
 For fixes, use diff code blocks, marking changes with "+" or "-". The line number range for comments with fix snippets must exactly match the range to replace in the new hunk.
 
-- Do NOT provide general feedback, summaries, explanations of changes, or praises 
+- Do NOT provide general feedback, summaries, explanations of changes, indentation inconsistency erroes, or praises 
   for making good additions. 
 - Focus solely on offering specific, objective insights based on the 
   given context and refrain from making broad comments about potential impacts on 
-  the system or question intentions behind the changes.
+  the system or question intentions behind the changes or indentation problems.
 
 If there are no issues found on a line range, you MUST respond with the 
 text "LGTM!" for that line range in the review section. 
