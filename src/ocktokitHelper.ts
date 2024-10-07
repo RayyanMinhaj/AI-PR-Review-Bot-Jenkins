@@ -37,23 +37,25 @@ export async function postInlineComment(owner: string, repo:string, pullNumber: 
     for(const comment of reviewComments){
         console.log("\n\nHeres the comment to be posted brah: ",comment.comment, "\n");
         if (!comment.comment.includes("LGTM!")){
-
-            await octokit.pulls.createReviewComment({
-                owner: owner,
-                repo: repo,
-                pull_number: pullNumber,
-                commit_id: pullRequestSHA, 
-                body: comment.comment,
-                path: filename,
-                line: comment.lineTo,
-                side: 'RIGHT',
-            });
+            try{
+                comment.lineTo = comment.lineTo -1;
+                await octokit.pulls.createReviewComment({
+                    owner: owner,
+                    repo: repo,
+                    pull_number: pullNumber,
+                    commit_id: pullRequestSHA, 
+                    body: comment.comment,
+                    path: filename,
+                    line: comment.lineTo,
+                    side: 'RIGHT',
+                });
     
-            console.log(`Comment posted on lines ${comment.lineFrom}-${comment.lineTo}: ${comment.comment}`);
+                console.log(`Comment posted on lines ${comment.lineFrom}-${comment.lineTo}: ${comment.comment}`);
         
-            
-            //console.error(`Error posting comment on lines ${comment.lineFrom}-${comment.lineTo}:`, error);
-            
+            }
+            catch(error){
+                console.error(`Error posting comment on lines ${comment.lineFrom}-${comment.lineTo}:`, error);
+            }
         }
         
     }
