@@ -27,7 +27,7 @@ async function run() {
 
     //what we want to do here is that we want to run a loop for every file inside our diff, so that response is
     //generated for each file every time 
-    //console.log("GIT DIFF: \n", fileDiff);
+    console.log("GIT DIFF: \n", fileDiff);
     
     const fileChanges = fileDiff.split(/--- | \+\+\+/).filter(Boolean).map(file => file.trim());
     
@@ -41,37 +41,39 @@ async function run() {
         console.log("FILENAME: ", filename, "\n\n");
         console.log("CONTENT OF FILE: ", content, "\n\n\n\n");
         ///////////////////////////////////////////////////////////////////////////////////////////////// Main body comment
-        //const body = await generateGPTResponseMainBody(title, description, content); 
+        const body = await generateGPTResponseMainBody(title, description, content); 
 
-        //await postComment(owner, repo, parseInt(pullNumber), body);
+        await postComment(owner, repo, parseInt(pullNumber), body);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //Moving towards making inline comments
 
-        //const patches = await splitPatch(content);
+        const patches = await splitPatch(content)
 
-        const hunks = await parsePatch(content);
+        for(const patch of patches){
+            const hunks = await parsePatch(patch)
         
-        if (hunks){
-            //console.log("Old Hunk: ", hunks.oldHunk); 
-            console.log("New Hunk: ", hunks.newHunk);
-            const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
+            if (hunks){
+                //console.log("Old Hunk: ", hunks.oldHunk); 
+                //console.log("New Hunk: ", hunks.newHunk);
+                const inline_comments = await generateGPTResponseInlineComments(title, description, hunks.newHunk);
 
-            console.log("\n\nGPT INLINE RESPONSE: \n", inline_comments);
+                console.log("\n\nGPT INLINE RESPONSE: \n", inline_comments);
 
-            const reviewComments: ReviewComment[] = await parseReviewComments(inline_comments); //this will extract all the necessary info from response
-            //i think this might be the culprit as this function places all the comments inside our interface.
+                const reviewComments: ReviewComment[] = await parseReviewComments(inline_comments); //this will extract all the necessary info from response
+                //i think this might be the culprit as this function places all the comments inside our interface.
 
 
-            //console.log("GPT OPENAI REVIEW COMMENTS: ", inline_comments);
-            //console.log("REVIEW COMMENTS INTERFACE: ", reviewComments);
+                //console.log("GPT OPENAI REVIEW COMMENTS: ", inline_comments);
+                //console.log("REVIEW COMMENTS INTERFACE: ", reviewComments);
             
 
-            await postInlineComment(owner, repo, parseInt(pullNumber), pullRequestSHA, filename, reviewComments);
+                await postInlineComment(owner, repo, parseInt(pullNumber), pullRequestSHA, filename, reviewComments);
+
+
+            }
 
         }
-
-        
 
     }
     

@@ -35,7 +35,7 @@ export async function postComment(owner: string, repo: string, pullNumber: numbe
 export async function postInlineComment(owner: string, repo:string, pullNumber: number, pullRequestSHA: string, filename:string, reviewComments:ReviewComment[])
 {
     for(const comment of reviewComments){
-        console.log("\n\nHeres the comment to be posted brah: ",comment.comment, "\n");
+        console.log("\n\nHeres the comment to be posted: ",comment.comment, "\n");
         if (!comment.comment.includes("LGTM!")){
             try{
                 //comment.lineTo = comment.lineTo -1;
