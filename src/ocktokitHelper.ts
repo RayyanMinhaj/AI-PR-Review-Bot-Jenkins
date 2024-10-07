@@ -38,7 +38,7 @@ export async function postInlineComment(owner: string, repo:string, pullNumber: 
         console.log("\n\nHeres the comment to be posted brah: ",comment.comment, "\n");
         if (!comment.comment.includes("LGTM!")){
             try{
-                comment.lineTo = comment.lineTo -1;
+                //comment.lineTo = comment.lineTo -1;
                 await octokit.pulls.createReviewComment({
                     owner: owner,
                     repo: repo,
