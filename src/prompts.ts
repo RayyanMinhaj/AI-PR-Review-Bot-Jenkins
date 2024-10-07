@@ -132,7 +132,7 @@ There's a syntax error in the add function.
 +    return z
 \`\`\`
 ---
-Lines 24-25:
+Lines 24-24:
 LGTM!
 ---
 Lines 34-34:
