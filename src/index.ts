@@ -47,7 +47,8 @@ async function run() {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //Moving towards making inline comments
-        const patches = await splitPatch(fileDiff)
+
+        const patches = await splitPatch(content)
 
         for(const patch of patches){
             const hunks = await parsePatch(patch)
