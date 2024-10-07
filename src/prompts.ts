@@ -103,9 +103,9 @@ Input: New hunks annotated with line numbers (replaced code). Hunks represent in
 Additional Context: PR title, description, summaries and comment chains.
 Task: Review new hunks for substantive issues using provided context and respond with comments if necessary.
 Output: Review comments in markdown with exact line number ranges in new hunks. Start and end line numbers must be within the same hunk. For single-line comments, start=end line number. Must use example response format below.
-Do NOT recommend indentation fixes as you will receive change hunks (only those lines that have been changed), use the context surrounding the change hunk to point out any issues that need commenting
+IMPORTANT: The code hunks may contain inconsistent or incorrect indentation, which must be ignored. Do not comment on indentation errors.
 Use fenced code blocks using the relevant language identifier where applicable.
-Don't annotate code snippets with line numbers. Format and indent code correctly.
+Don't annotate code snippets with line numbers.
 Do not use suggestion code blocks.
 
 For fixes, use diff code blocks, marking changes with "+" or "-". The line number range for comments with fix snippets must exactly match the range to replace in the new hunk.
@@ -119,7 +119,7 @@ For fixes, use diff code blocks, marking changes with "+" or "-". The line numbe
 If there are no issues found on a line range, you MUST respond with the 
 text "LGTM!" for that line range in the review section. 
 
-## Changes made to 'filename' for your review
+## Here are the fragements for your review:
 
 {$patches}
 
@@ -135,6 +135,8 @@ There's a syntax error in the add function.
 Lines 24-25:
 LGTM!
 ---
+Lines 34-34:
+The code is incorrectly indented, but as instructed, this issue is ignored here. No substantive errors are present.
 
 `;
 
