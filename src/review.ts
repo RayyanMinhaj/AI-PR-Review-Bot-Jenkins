@@ -174,7 +174,7 @@ export async function parseReviewComments(text: string): Promise<ReviewComment[]
         reviewComments.push({
           lineFrom,
           lineTo,
-          comment: commentLines.join(" ").trim(),
+          comment: commentLines.join("\n").trim(),
         });
         commentLines = [];
       }
@@ -190,7 +190,7 @@ export async function parseReviewComments(text: string): Promise<ReviewComment[]
           reviewComments.push({
             lineFrom,
             lineTo,
-            comment: commentLines.join(" ").trim(),
+            comment: commentLines.join("\n").trim(),
           });
           commentLines = [];
         }
@@ -208,7 +208,7 @@ export async function parseReviewComments(text: string): Promise<ReviewComment[]
     reviewComments.push({
       lineFrom,
       lineTo,
-      comment: commentLines.join(" ").trim(),
+      comment: commentLines.join("\n").trim(),
     });
   }
 
