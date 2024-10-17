@@ -8,19 +8,7 @@ pipeline {
         DESTINATION_BRANCH = 'main'
     }
 
-    stages {
-        stage('Check PR Destination Branch') {
-            steps {
-                script {
-                    // Check if the PR is into the desired destination branch
-                    if (${env.GITHUB_PR_DESTINATION_BRANCH} != DESTINATION_BRANCH) {
-                        echo "Skipping pipeline as the PR is NOT into ${DESTINATION_BRANCH}"
-                        currentBuild.result = 'SUCCESS'
-                        return // Exit the pipeline early if branch does not match
-                    }
-                }
-            }
-        }
+    stages {       
 
         stage('Pull and Run Docker Image') {
             steps {
