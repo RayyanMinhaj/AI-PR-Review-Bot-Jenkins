@@ -21,7 +21,7 @@ pipeline {
                         -e GITHUB_PR_SOURCE_REPO_OWNER=${env.GITHUB_PR_SOURCE_REPO_OWNER} \
                         -e OPENAI_API_KEY=${OPENAI_API_KEY} \
                         -e GMAIL_APP_PASS=${GMAIL_APP_PASS} \
-                        -e GITHUB_REPO_GIT_URL=${GITHUB_REPO_GIT_URL} \
+                        -e GITHUB_REPO_GIT_URL=${GIT_URL} \
                         -e GITHUB_PR_NUMBER=${GITHUB_PR_NUMBER} \
                         -e DECIDER="GitHub" \
                         rayyanm22/ai-pr-bot:latest
