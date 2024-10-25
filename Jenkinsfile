@@ -16,7 +16,9 @@ pipeline {
         stage('Pull and Run Docker Image') {
             steps {
                 script {
-                    bat 'docker login -u ${env.DOCKER_USERNAME} --password ${env.DOCKER_PASSWORD}'
+                    bat """
+                        docker login -u ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+                    """
                     bat 'docker pull 10pdocker/ai-pr-bot:latest'
 
                     bat """
