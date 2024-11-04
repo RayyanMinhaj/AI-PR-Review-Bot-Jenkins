@@ -54,7 +54,7 @@ def update_player_pos(direction):
     if direction == "up":
         y -= 1
     elif direction == "down":
-        y += 2  # Error: should be 1
+        y += 1
     elif direction == "left":
         x -= 1
     elif direction == "right":
@@ -69,6 +69,7 @@ def place_mines():
         if board[y][x] == 0:
             board[y][x] = -1
             mine_count += 1
+    # Error: Not checking if NUM_MINES is greater than BOARD_SIZE^2
 
 def game_loop():
     global player_pos, game_over, moves, flags, mines_found
@@ -82,6 +83,10 @@ def game_loop():
         direction = input("Enter the direction (up, down, left, or right): ")
 
         new_pos = update_player_pos(direction)
+        if new_pos[1] < 0 or new_pos[1] >= BOARD_SIZE or new_pos[0] < 0 or new_pos[0] >= BOARD_SIZE:
+            print("Invalid move. Out of bounds.")  # Error: Should not allow move outside the board
+            continue
+
         if board[new_pos[1]][new_pos[0]] == -1:
             game_over = True
             print("Game over! You hit a mine.")
@@ -89,7 +94,7 @@ def game_loop():
             player_pos = new_pos
             moves += 1
 
-        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES:  # Error: should be - NUM_MINES - 1
+        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES:
             game_over = True
             print("Congratulations! You found all the mines.")
 
@@ -103,8 +108,6 @@ def game_loop():
             if board[player_pos[1]][player_pos[0]] == "F":
                 board[player_pos[1]][player_pos[0]] = 0
                 flags -= 1
-            else:
-                print("No flag to remove.")  # Error: Shouldn't provide feedback when there is no flag
 
 def main():
     place_mines()
