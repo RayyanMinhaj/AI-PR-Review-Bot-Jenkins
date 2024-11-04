@@ -1,16 +1,16 @@
 import random
 
 # Constants
-BOARD_SIZE = 10
 NUM_MINES = 10
+BOARD_SIZE = 10
 
 # Game state
-board = [[0 for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+flags = 0
 player_pos = (0, 0)
+mines_found = 0
+board = [[0 for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 game_over = False
 moves = 0
-flags = 0
-mines_found = 0
 
 def clear_screen():
     print("\033[H\033[J", end="")
@@ -29,16 +29,32 @@ def print_board():
         print()
 
 def print_stats():
-    print("Moves:", moves)
     print("Flags:", flags)
+    print("Moves:", moves)
     print("Mines found:", mines_found)
+
+def calculate_mine_counts():
+    for y in range(BOARD_SIZE):
+        for x in range(BOARD_SIZE):
+            if board[y][x] != -1:
+                board[y][x] = count_nearby_mines(x, y)
+
+def count_nearby_mines(x, y):
+    count = 0
+    for dx in [-1, 0, 1]:
+        for dy in [-1, 0, 1]:
+            nx = x + dx
+            ny = y + dy
+            if 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE and board[ny][nx] == -1:
+                count += 1
+    return count
 
 def update_player_pos(direction):
     x, y = player_pos
     if direction == "up":
-        y -= 2  # Error: should be 1
+        y -= 1
     elif direction == "down":
-        y += 1
+        y += 2  # Error: should be 1
     elif direction == "left":
         x -= 1
     elif direction == "right":
@@ -53,22 +69,6 @@ def place_mines():
         if board[y][x] == 0:
             board[y][x] = -1
             mine_count += 1
-
-def count_nearby_mines(x, y):
-    count = 0
-    for dy in [-1, 0, 1]:
-        for dx in [-1, 0, 1]:
-            nx = x + dx
-            ny = y + dy
-            if 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE and board[ny][nx] == -1:
-                count += 1
-    return count
-
-def calculate_mine_counts():
-    for y in range(BOARD_SIZE):
-        for x in range(BOARD_SIZE):
-            if board[y][x] != -1:
-                board[y][x] = count_nearby_mines(x, y)
 
 def game_loop():
     global player_pos, game_over, moves, flags, mines_found
@@ -89,7 +89,7 @@ def game_loop():
             player_pos = new_pos
             moves += 1
 
-        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES + 1:  # Error: should not have +1
+        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES:  # Error: should be - NUM_MINES - 1
             game_over = True
             print("Congratulations! You found all the mines.")
 
@@ -99,12 +99,12 @@ def game_loop():
             if board[player_pos[1]][player_pos[0]] == 0:
                 board[player_pos[1]][player_pos[0]] = "F"
                 flags += 1
-            elif board[player_pos[1]][player_pos[0]] == "F":  # Error: Redundant condition, already checked in unflag
-                print("Already flagged.")
         elif action == "unflag":
             if board[player_pos[1]][player_pos[0]] == "F":
                 board[player_pos[1]][player_pos[0]] = 0
                 flags -= 1
+            else:
+                print("No flag to remove.")  # Error: Shouldn't provide feedback when there is no flag
 
 def main():
     place_mines()
