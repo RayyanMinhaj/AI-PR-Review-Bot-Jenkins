@@ -36,7 +36,7 @@ def print_stats():
 def update_player_pos(direction):
     x, y = player_pos
     if direction == "up":
-        y -= 1
+        y -= 2  # Error: should be 1
     elif direction == "down":
         y += 1
     elif direction == "left":
@@ -89,7 +89,7 @@ def game_loop():
             player_pos = new_pos
             moves += 1
 
-        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES:
+        if moves == BOARD_SIZE * BOARD_SIZE - NUM_MINES + 1:  # Error: should not have +1
             game_over = True
             print("Congratulations! You found all the mines.")
 
@@ -99,6 +99,8 @@ def game_loop():
             if board[player_pos[1]][player_pos[0]] == 0:
                 board[player_pos[1]][player_pos[0]] = "F"
                 flags += 1
+            elif board[player_pos[1]][player_pos[0]] == "F":  # Error: Redundant condition, already checked in unflag
+                print("Already flagged.")
         elif action == "unflag":
             if board[player_pos[1]][player_pos[0]] == "F":
                 board[player_pos[1]][player_pos[0]] = 0
