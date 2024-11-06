@@ -19,7 +19,7 @@ pipeline {
                     bat """
                         docker login -u ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
                     """
-                    bat 'docker pull 10pdocker/ai-pr-bot:latest'
+                    bat 'docker pull 10pdocker/ai-pr-bot:testing'
 
                     bat """
                         docker run \
@@ -29,7 +29,7 @@ pipeline {
                         -e GIT_REPOSITORY_URL=${GIT_URL} \
                         -e GITHUB_PR_NUMBER=${GITHUB_PR_NUMBER} \
                         -e DECIDER="GitHub" \
-                        10pdocker/ai-pr-bot:latest
+                        10pdocker/ai-pr-bot:testing
                     """
                 }
             }
