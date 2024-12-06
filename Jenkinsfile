@@ -24,7 +24,7 @@ pipeline {
                     bat """
                         docker run \
                         -e GITHUB_TOKEN=${GITHUB_TOKEN} \
-                        -e GITHUB_PR_SOURCE_REPO_OWNER=${env.GITHUB_PR_SOURCE_REPO_OWNER} \
+                        -e GITHUB_PR_SOURCE_REPO_OWNER="${SOURCE_REPO_OWNER_NAME}" \
                         -e OPENAI_API_KEY=${OPENAI_API_KEY} \
                         -e GIT_REPOSITORY_URL=${GIT_URL} \
                         -e GITHUB_PR_NUMBER=${GITHUB_PR_NUMBER} \
