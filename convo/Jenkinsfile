@@ -29,6 +29,8 @@ pipeline {
                         -e GIT_REPOSITORY_URL=${GIT_URL} \
                         -e GITHUB_PR_NUMBER=${GITHUB_PR_NUM} \
                         -e COMMENT="${COMMENT}" \
+                        -e FILENAME="${FILENAME}" \
+                        -e LINETO=${LINETO} \
                         -e DECIDER="GitHubWebhook" \
                         10pdocker/ai-pr-bot:testing
                     """
