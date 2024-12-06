@@ -27,7 +27,8 @@ pipeline {
                         -e GITHUB_PR_SOURCE_REPO_OWNER=${env.GITHUB_PR_SOURCE_REPO_OWNER} \
                         -e OPENAI_API_KEY=${OPENAI_API_KEY} \
                         -e GIT_REPOSITORY_URL=${GIT_URL} \
-                        -e GITHUB_PR_NUMBER=${GITHUB_PR_NUMBER} \
+                        -e GITHUB_PR_NUMBER=${GITHUB_PR_NUM} \
+                        -e COMMENT=${COMMENT} \
                         -e DECIDER="GitHubWebhook" \
                         10pdocker/ai-pr-bot:testing
                     """
