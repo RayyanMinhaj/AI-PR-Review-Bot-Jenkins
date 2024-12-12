@@ -31,6 +31,7 @@ pipeline {
                         -e COMMENT="${COMMENT}" \
                         -e FILENAME="${FILENAME}" \
                         -e LINETO=${LINETO} \
+                        -e DIFFHUNK="${DIFFHUNK}" \
                         -e DECIDER="GitHubWebhook" \
                         10pdocker/ai-pr-bot:testing
                     """
