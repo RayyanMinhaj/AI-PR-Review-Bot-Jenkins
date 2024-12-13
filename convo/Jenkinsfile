@@ -32,6 +32,7 @@ pipeline {
                         -e COMMENT="${COMMENT}" \
                         -e FILENAME="${FILENAME}" \
                         -e LINETO=${LINETO} \
+                        -e COMMENTID=${COMMENTID} \
                         -e DECIDER="GitHubWebhook" \
                         10pdocker/ai-pr-bot:testing
                     """
