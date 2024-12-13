@@ -20,7 +20,7 @@ pipeline {
                         docker login -u ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
                     """
                     bat 'docker pull 10pdocker/ai-pr-bot:testing'
-
+                    
                     bat """
                         docker run \
                         -e GITHUB_TOKEN=${GITHUB_TOKEN} \
@@ -31,7 +31,7 @@ pipeline {
                         -e COMMENT="${COMMENT}" \
                         -e FILENAME="${FILENAME}" \
                         -e LINETO=${LINETO} \
-                        -e DIFFHUNK="${DIFFHUNK.replace('\n', '\\n')}" \
+                        // -e DIFFHUNK="${DIFFHUNK.replace('\n', '\\n')}" \
                         -e DECIDER="GitHubWebhook" \
                         10pdocker/ai-pr-bot:testing
                     """
