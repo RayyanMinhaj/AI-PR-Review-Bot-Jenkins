@@ -22,7 +22,8 @@ pipeline {
                     bat 'docker pull 10pdocker/ai-pr-bot:testing'
 
                     // -e DIFFHUNK="${DIFFHUNK.replace('\n', '\\n')}" \
-                    def encodedDiffHunk = bat(script: "echo ${DIFFHUNK} | base64", returnStdout: true).trim()
+                    //def encodedDiffHunk = bat(script: "echo ${DIFFHUNK} | base64", returnStdout: true).trim()
+                    def encodedDiffHunk = Base64.encoder.encodeToString(DIFFHUNK.getBytes("UTF-8"))
                     bat """
                         docker run \
                         -e GITHUB_TOKEN=${GITHUB_TOKEN} \
