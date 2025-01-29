@@ -29,10 +29,10 @@ pipeline {
                         -e GIT_REPOSITORY_URL=${GIT_URL} \
                         -e GITHUB_PR_NUMBER=${GITHUB_PR_NUMBER} \
                         -e DECIDER="GitHubAcceptanceData" \
-                        10pdocker/ai-pr-bot:testing > acceptance_report.txt
+                        10pdocker/ai-pr-bot:testing
                     """
 
-                    archiveArtifacts artifacts: 'acceptance_report.txt', allowEmptyArchive: false
+                    archiveArtifacts artifacts: 'acceptance_report.pdf', allowEmptyArchive: false
                 }
             }
         }
